@@ -15,12 +15,20 @@ def main():
     
     while True:
         message, clientAddress = serverSocket.recvfrom(2048)
-        
-        n = int(message.decode('utf-8'))
+
+        try:
+            n = int(message.decode('utf-8').strip())
+            if n < 0:
+                raise ValueError
+        except (UnicodeDecodeError, ValueError):
+            serverSocket.sendto(
+                "Error: ingrese un número natural mayor o igual a 0.".encode('utf-8'),
+                clientAddress,
+            )
+            continue
+
         print(f"Recibido n = {n} desde {clientAddress}")
-        
         suma = calcular_suma_n_numeros(n)
-        
         serverSocket.sendto(str(suma).encode('utf-8'), clientAddress)
 
 if __name__ == "__main__":
