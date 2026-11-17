@@ -1,0 +1,3 @@
+DEMO001,Yoga,10:00
+DEMO001,Spinning,18:30
+DEMO002,Pilates,17:00
